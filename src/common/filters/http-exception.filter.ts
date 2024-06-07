@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Response, Request } from "express";
 import {
   Catch,
   ArgumentsHost,
@@ -11,9 +11,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const statusCode = exception.getStatus();
+    const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
     let errorResponse: any = exception.getResponse();
-    console.error({ errorResponse });
+
+    console.error({ request, errorResponse });
 
     if (Array.isArray(errorResponse.message))
       errorResponse = {

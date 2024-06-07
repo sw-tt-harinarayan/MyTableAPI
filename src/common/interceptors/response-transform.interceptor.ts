@@ -19,7 +19,7 @@ export class ResponseTransformInterceptor implements NestInterceptor {
           message = "Record found successfully.",
         } = response;
 
-        console.log({ response });
+        console.info({ response });
 
         // Set the status code in the response
         httpResponse.status(statusCode);
