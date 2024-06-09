@@ -1,11 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
+  IsEnum,
   Matches,
   IsString,
   MinLength,
   IsNotEmpty,
   IsOptional,
 } from "class-validator";
+
+import { Role } from "src/configs/enums";
 
 export class CreateUserDto {
   @IsString()
@@ -55,5 +58,14 @@ export class CreateUserDto {
     format: "binary",
     description: "Select your profile image",
   })
-  image: string;
+  profileImage: string;
+
+  @IsEnum(Role)
+  @IsOptional()
+  @ApiProperty({
+    enum: Role,
+    example: Role.CUSTOMER,
+    description: "Select user role.",
+  })
+  readonly role: Role;
 }

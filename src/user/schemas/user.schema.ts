@@ -1,6 +1,8 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as mongoosePaginate from "mongoose-paginate-v2";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
-import { Role, Status } from 'src/common/enums';
+import { Role, Status } from "src/configs/enums";
+import { imageFolderField } from "src/configs/constants";
 
 @Schema({ timestamps: true, versionKey: false })
 export class User {
@@ -14,7 +16,7 @@ export class User {
   password: string;
 
   @Prop()
-  image: string;
+  profileImage: string;
 
   @Prop()
   role: Role;
@@ -24,13 +26,16 @@ export class User {
 }
 
 const UserSchema = SchemaFactory.createForClass(User);
+UserSchema.plugin(mongoosePaginate);
 
-UserSchema.set('toJSON', {
+UserSchema.set("toJSON", {
   transform: (doc, ret) => {
     delete ret._id;
 
     ret.id = doc._id;
-    ret.image = `${process.env.BASE_URL}${ret.image}`;
+
+    if (ret?.profileImage)
+      ret.profileImage = `${process.env.BASE_URL}/${imageFolderField.user.folderName}/${ret.profileImage}`;
 
     return ret;
   },

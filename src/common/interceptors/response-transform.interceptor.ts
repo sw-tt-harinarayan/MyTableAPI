@@ -13,23 +13,28 @@ export class ResponseTransformInterceptor implements NestInterceptor {
     return next.handle().pipe(
       map((response: any) => {
         const httpResponse = context.switchToHttp().getResponse();
-        const {
+        let {
           body = {},
           statusCode = httpResponse.statusCode || 200,
           message = "Record found successfully.",
         } = response;
 
-        console.info({ response });
+        // console.info({ response });
 
         // Set the status code in the response
         httpResponse.status(statusCode);
 
         // Modify the response data here as needed
-        const modifiedData = {
+        let modifiedData = {
           statusCode,
           message,
           body,
         };
+
+        if (body?.docs) {
+          const { docs, ...rest } = body;
+          modifiedData = { ...modifiedData, body: docs, ...rest };
+        }
 
         return modifiedData;
       }),

@@ -1,18 +1,23 @@
-import { MongooseModule } from '@nestjs/mongoose';
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MongooseModule } from "@nestjs/mongoose";
+import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 
-import { UserService } from './user.service';
-import UserSchema from './schemas/user.schema';
-import { UserController } from './user.controller';
-import { ImageValidationMiddleware } from 'src/common/middlewares/image-validation.middleware';
+import UserService from "./user.service";
+import UserSchema from "./schemas/user.schema";
+import UserController from "./user.controller";
+import ImageUploadMiddleware from "src/common/middlewares/image-upload.middleware";
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],
+  imports: [MongooseModule.forFeature([{ name: "User", schema: UserSchema }])],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, ImageUploadMiddleware],
 })
 export class UserModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ImageValidationMiddleware).forRoutes('user/create');
+    consumer
+      .apply(ImageUploadMiddleware)
+      .forRoutes(
+        { path: "user/edit", method: RequestMethod.PATCH },
+        { path: "user/create", method: RequestMethod.POST },
+      );
   }
 }

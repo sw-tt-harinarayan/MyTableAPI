@@ -1,15 +1,48 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import {
+  IsEnum,
+  Matches,
+  IsString,
+  MinLength,
+  IsNotEmpty,
+  IsOptional,
+} from "class-validator";
 
-import { Role } from 'src/common/enums';
-import { CreateUserDto } from './create-user.dto';
-import { IsEnum, IsNotEmpty } from 'class-validator';
+import { Role } from "src/configs/enums";
 
-export class UpdateUserDto extends PartialType(CreateUserDto) {
+export class UpdateUserDto {
+  @IsString()
+  @IsOptional()
+  @ApiPropertyOptional({
+    required: true,
+    example: "John Doe",
+    description: "Enter your full name",
+  })
+  readonly fullName: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiPropertyOptional({
+    required: true,
+    example: "john@test.com",
+    description: "Enter your email address",
+  })
+  readonly email: string;
+
+  @IsOptional()
+  @ApiPropertyOptional({
+    type: "string",
+    format: "binary",
+    description: "Select your profile image",
+  })
+  profileImage: string;
+
   @IsEnum(Role)
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty({
     enum: Role,
-    description: 'The categories of the book',
+    example: Role.CUSTOMER,
+    description: "Select user role.",
   })
   readonly role: Role;
 }

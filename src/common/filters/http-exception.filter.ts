@@ -15,7 +15,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     let errorResponse: any = exception.getResponse();
 
-    console.error({ request, errorResponse });
+    console.error({ errorResponse });
 
     if (Array.isArray(errorResponse.message))
       errorResponse = {
