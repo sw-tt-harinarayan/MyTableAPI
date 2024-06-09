@@ -89,6 +89,7 @@ export default class UserController {
     @UploadedFile() profileImage: Express.Multer.File,
   ) {
     if (profileImage) updateUserDto.profileImage = profileImage.filename;
+    else delete updateUserDto.profileImage;
 
     return this.userService.update(id, updateUserDto);
   }

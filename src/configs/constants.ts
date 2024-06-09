@@ -7,4 +7,8 @@ export const imageFolderField = {
     folderName: "users",
     fieldName: "profileImage",
   },
+  category: {
+    fieldName: "image",
+    folderName: "categories",
+  },
 };

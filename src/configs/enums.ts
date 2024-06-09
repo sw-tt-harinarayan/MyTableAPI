@@ -19,3 +19,8 @@ export enum SortByUser {
   CREATED_ASC = "createdAt,asc",
   CREATED_DESC = "createdAt,desc",
 }
+
+export enum SortByCategory {
+  CREATED_ASC = "createdAt,asc",
+  CREATED_DESC = "createdAt,desc",
+}

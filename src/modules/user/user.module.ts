@@ -11,12 +11,12 @@ import ImageUploadMiddleware from "src/common/middlewares/image-upload.middlewar
   controllers: [UserController],
   providers: [UserService, ImageUploadMiddleware],
 })
-export class UserModule {
+export default class UserModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ImageUploadMiddleware)
       .forRoutes(
-        { path: "user/edit", method: RequestMethod.PATCH },
+        { path: "user/edit/:id", method: RequestMethod.PATCH },
         { path: "user/create", method: RequestMethod.POST },
       );
   }

@@ -4,8 +4,9 @@ import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 
 import { AppService } from "./app.service";
-import { UserModule } from "./user/user.module";
 import { AppController } from "./app.controller";
+import UserModule from "./modules/user/user.module";
+import CategoryModule from "./modules/category/category.module";
 import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
 
 @Module({
@@ -17,6 +18,7 @@ import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
     }),
     MongooseModule.forRoot(process.env.DB_URI),
     UserModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [
