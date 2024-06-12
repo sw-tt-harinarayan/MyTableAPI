@@ -1,4 +1,5 @@
 import { PaginateModel } from "mongoose";
+import { InjectModel } from "@nestjs/mongoose";
 import {
   Injectable,
   NotFoundException,
@@ -7,9 +8,8 @@ import {
 
 import { USER } from "src/lang/en";
 import { User } from "./schemas/user.schema";
-import { InjectModel } from "@nestjs/mongoose";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
+import CreateUserDto from "./dto/create-user.dto";
+import UpdateUserDto from "./dto/update-user.dto";
 
 @Injectable()
 export default class UserService {

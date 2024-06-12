@@ -12,6 +12,7 @@ import {
   Param,
   Query,
   Delete,
+  UsePipes,
   Controller,
   HttpStatus,
   UploadedFile,
@@ -20,9 +21,10 @@ import {
 
 import { USER } from "src/lang/en";
 import UserService from "./user.service";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
-import { PaginateUserDto } from "./dto/paginate-user.dto";
+import CreateUserDto from "./dto/create-user.dto";
+import UpdateUserDto from "./dto/update-user.dto";
+import PaginateUserDto from "./dto/paginate-user.dto";
+import AddressValidationDtoPipe from "src/common/pipes/address-validation.pipe";
 
 @ApiTags("User CRUD")
 @Controller("user")
@@ -36,6 +38,7 @@ export default class UserController {
     status: HttpStatus.CREATED,
     description: USER.created,
   })
+  @UsePipes(new AddressValidationDtoPipe())
   create(
     @Body() createUserDto: CreateUserDto,
     @UploadedFile() profileImage: Express.Multer.File,

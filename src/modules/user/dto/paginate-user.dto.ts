@@ -3,7 +3,7 @@ import { IsOptional, IsNumberString, IsEnum } from "class-validator";
 
 import { SortByUser } from "src/configs/enums";
 
-export class PaginateUserDto {
+export default class PaginateUserDto {
   @IsNumberString()
   @IsOptional()
   @ApiPropertyOptional({

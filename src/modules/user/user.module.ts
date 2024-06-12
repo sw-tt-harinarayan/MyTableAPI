@@ -7,9 +7,9 @@ import UserController from "./user.controller";
 import ImageUploadMiddleware from "src/common/middlewares/image-upload.middleware";
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: "User", schema: UserSchema }])],
   controllers: [UserController],
   providers: [UserService, ImageUploadMiddleware],
+  imports: [MongooseModule.forFeature([{ name: "User", schema: UserSchema }])],
 })
 export default class UserModule {
   configure(consumer: MiddlewareConsumer) {

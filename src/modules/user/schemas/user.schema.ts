@@ -2,6 +2,7 @@ import * as mongoosePaginate from "mongoose-paginate-v2";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 import { Role, Status } from "src/configs/enums";
+import Address from "src/common/schemas/address.schema";
 import { imageFolderField } from "src/configs/constants";
 
 @Schema({ timestamps: true, versionKey: false })
@@ -20,6 +21,9 @@ export class User {
 
   @Prop()
   role: Role;
+
+  @Prop()
+  address: Address;
 
   @Prop()
   status: Status;

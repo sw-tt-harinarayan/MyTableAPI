@@ -9,8 +9,9 @@ import {
 } from "class-validator";
 
 import { Role } from "src/configs/enums";
+import AddressDto from "src/common/dto/address.dto";
 
-export class CreateUserDto {
+export default class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -68,4 +69,11 @@ export class CreateUserDto {
     description: "Select user role.",
   })
   readonly role: Role;
+
+  @IsOptional()
+  @ApiPropertyOptional({
+    type: AddressDto,
+    description: "User address.",
+  })
+  address: AddressDto;
 }

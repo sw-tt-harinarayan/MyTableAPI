@@ -10,7 +10,7 @@ import {
 
 import { Role } from "src/configs/enums";
 
-export class UpdateUserDto {
+export default class UpdateUserDto {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
