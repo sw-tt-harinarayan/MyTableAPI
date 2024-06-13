@@ -4,7 +4,7 @@ import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 import CategoryService from "./category.service";
 import CategorySchema from "./schemas/category.schema";
 import CategoryController from "./category.controller";
-import ImageUploadMiddleware from "src/common/middlewares/image-upload.middleware";
+import ImageUploadMiddleware from "src/utils/middlewares/image-upload.middleware";
 
 @Module({
   imports: [

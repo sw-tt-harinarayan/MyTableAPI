@@ -9,7 +9,7 @@ import {
 } from "class-validator";
 
 import { Role } from "src/configs/enums";
-import AddressDto from "src/common/dto/address.dto";
+import AddressDto from "src/utils/dto/address.dto";
 
 export default class CreateUserDto {
   @IsString()

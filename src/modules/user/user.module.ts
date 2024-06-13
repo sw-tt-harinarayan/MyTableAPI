@@ -4,7 +4,7 @@ import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 import UserService from "./user.service";
 import UserSchema from "./schemas/user.schema";
 import UserController from "./user.controller";
-import ImageUploadMiddleware from "src/common/middlewares/image-upload.middleware";
+import ImageUploadMiddleware from "src/utils/middlewares/image-upload.middleware";
 
 @Module({
   controllers: [UserController],

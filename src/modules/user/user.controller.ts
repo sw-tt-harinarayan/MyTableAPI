@@ -24,7 +24,7 @@ import UserService from "./user.service";
 import CreateUserDto from "./dto/create-user.dto";
 import UpdateUserDto from "./dto/update-user.dto";
 import PaginateUserDto from "./dto/paginate-user.dto";
-import AddressValidationDtoPipe from "src/common/pipes/address-validation.pipe";
+import AddressValidationDtoPipe from "src/utils/pipes/address-validation.pipe";
 
 @ApiTags("User CRUD")
 @Controller("user")

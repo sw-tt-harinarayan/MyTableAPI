@@ -7,7 +7,7 @@ import { AppService } from "./app.service";
 import { AppController } from "./app.controller";
 import UserModule from "./modules/user/user.module";
 import CategoryModule from "./modules/category/category.module";
-import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
+import { HttpExceptionFilter } from "./utils/filters/http-exception.filter";
 
 @Module({
   imports: [
