@@ -4,9 +4,9 @@ export enum Category {
 }
 
 export enum Role {
-  ADMIN = "Admin",
-  MANAGER = "Manager",
-  CUSTOMER = "Customer",
+  ADMIN = "admin",
+  MANAGER = "manager",
+  CUSTOMER = "customer",
 }
 
 export enum Status {

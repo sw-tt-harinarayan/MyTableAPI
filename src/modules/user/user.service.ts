@@ -1,9 +1,11 @@
+import * as bcrypt from "bcrypt";
 import { PaginateModel } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import {
   Injectable,
   NotFoundException,
   InternalServerErrorException,
+  BadRequestException,
 } from "@nestjs/common";
 
 import { USER } from "src/lang/en";
@@ -16,8 +18,17 @@ export default class UserService {
   constructor(@InjectModel(User.name) private userModel: PaginateModel<User>) {}
 
   async create(createUserDto: CreateUserDto) {
+    let user: User = await this.userModel.findOne({
+      email: createUserDto.email,
+    });
+
+    if (user) throw new BadRequestException("Email already exist");
+
     try {
-      const user: User = await this.userModel.create(createUserDto);
+      user = await this.userModel.create({
+        ...createUserDto,
+        password: bcrypt.hashSync(createUserDto.password, 12),
+      });
 
       return { body: user, message: USER.created };
     } catch (error) {
@@ -37,6 +48,16 @@ export default class UserService {
     if (!user) throw new NotFoundException(USER.notFound);
 
     return { body: user, message: USER.found };
+  }
+
+  async findByEmail(email: string) {
+    console.log({ email });
+
+    const user: any = await this.userModel.findOne({ email });
+
+    if (!user) throw new NotFoundException(USER.notFound);
+
+    return user.toJSON();
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

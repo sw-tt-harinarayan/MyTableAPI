@@ -7,6 +7,7 @@ import UserController from "./user.controller";
 import ImageUploadMiddleware from "src/utils/middlewares/image-upload.middleware";
 
 @Module({
+  exports: [UserService],
   controllers: [UserController],
   providers: [UserService, ImageUploadMiddleware],
   imports: [MongooseModule.forFeature([{ name: "User", schema: UserSchema }])],
@@ -16,8 +17,8 @@ export default class UserModule {
     consumer
       .apply(ImageUploadMiddleware)
       .forRoutes(
-        { path: "user/edit/:id", method: RequestMethod.PATCH },
         { path: "user/create", method: RequestMethod.POST },
+        { path: "user/edit/:id", method: RequestMethod.PATCH },
       );
   }
 }

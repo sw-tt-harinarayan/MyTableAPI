@@ -24,7 +24,7 @@ import UserService from "./user.service";
 import CreateUserDto from "./dto/create-user.dto";
 import UpdateUserDto from "./dto/update-user.dto";
 import PaginateUserDto from "./dto/paginate-user.dto";
-import AddressValidationDtoPipe from "src/utils/pipes/address-validation.pipe";
+import { Public } from "src/utils/decorators/public.decorator";
 
 @ApiTags("User CRUD")
 @Controller("user")
@@ -32,13 +32,13 @@ export default class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post("create")
+  @Public()
   @ApiConsumes("multipart/form-data")
   @ApiOperation({ summary: "Create user" })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: USER.created,
   })
-  @UsePipes(new AddressValidationDtoPipe())
   create(
     @Body() createUserDto: CreateUserDto,
     @UploadedFile() profileImage: Express.Multer.File,

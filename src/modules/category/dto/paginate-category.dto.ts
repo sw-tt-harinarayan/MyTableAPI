@@ -3,7 +3,7 @@ import { IsOptional, IsNumberString, IsEnum } from "class-validator";
 
 import { SortByCategory } from "src/configs/enums";
 
-export class PaginateCategoryDto {
+export default class PaginateCategoryDto {
   @IsNumberString()
   @IsOptional()
   @ApiPropertyOptional({

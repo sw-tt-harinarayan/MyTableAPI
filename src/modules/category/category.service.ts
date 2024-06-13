@@ -8,8 +8,8 @@ import {
 
 import { CATEGORY } from "src/lang/en";
 import { Category } from "./schemas/category.schema";
-import { CreateCategoryDto } from "./dto/create-category.dto";
-import { UpdateCategoryDto } from "./dto/update-category.dto";
+import CreateCategoryDto from "./dto/create-category.dto";
+import UpdateCategoryDto from "./dto/update-category.dto";
 
 @Injectable()
 export default class CategoryService {

@@ -3,9 +3,9 @@ import {
   ApiResponse,
   ApiConsumes,
   ApiOperation,
+  ApiBearerAuth,
 } from "@nestjs/swagger";
 import {
-  Controller,
   Get,
   Post,
   Body,
@@ -13,19 +13,29 @@ import {
   Param,
   Query,
   Delete,
+  UseGuards,
   HttpStatus,
+  Controller,
   UploadedFile,
   InternalServerErrorException,
 } from "@nestjs/common";
 
 import { CATEGORY } from "src/lang/en";
+import { Role } from "src/configs/enums";
+import AuthGuard from "../auth/auth.guard";
+import RolesGuard from "../auth/roles.guard";
 import CategoryService from "./category.service";
-import { CreateCategoryDto } from "./dto/create-category.dto";
-import { UpdateCategoryDto } from "./dto/update-category.dto";
-import { PaginateCategoryDto } from "./dto/paginate-category.dto";
+import CreateCategoryDto from "./dto/create-category.dto";
+import UpdateCategoryDto from "./dto/update-category.dto";
+import { Roles } from "src/utils/decorators/roles.decorator";
+import PaginateCategoryDto from "./dto/paginate-category.dto";
 
-@ApiTags("Category CRUD")
+@ApiBearerAuth()
+@Roles(Role.ADMIN)
+// @UseGuards(RolesGuard)
+// @UseGuards(AuthGuard)
 @Controller("category")
+@ApiTags("Category CRUD")
 export default class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 

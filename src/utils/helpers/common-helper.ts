@@ -8,3 +8,13 @@ export const getImageFolderField = (url: string): ImageFolderFieldInterface => {
 
   return imageFolderField[key];
 };
+
+export function extractDataFromObject(data: any, keys: Array<any>) {
+  let result: any = {};
+
+  keys.forEach((item: string) => {
+    result[item] = data[item];
+  });
+
+  return result;
+}

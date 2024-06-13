@@ -6,10 +6,11 @@ import {
   MinLength,
   IsNotEmpty,
   IsOptional,
+  IsEmail,
 } from "class-validator";
 
 import { Role } from "src/configs/enums";
-import AddressDto from "src/utils/dto/address.dto";
+import { IsRoleValid } from "src/utils/decorators/role-validation.decorator";
 
 export default class CreateUserDto {
   @IsString()
@@ -21,7 +22,7 @@ export default class CreateUserDto {
   })
   readonly fullName: string;
 
-  @IsString()
+  @IsEmail()
   @IsNotEmpty()
   @ApiProperty({
     required: true,
@@ -61,19 +62,23 @@ export default class CreateUserDto {
   })
   profileImage: string;
 
-  @IsEnum(Role)
-  @IsOptional()
+  @IsRoleValid({ message: "Role is not valid" })
   @ApiProperty({
-    enum: Role,
-    example: Role.CUSTOMER,
-    description: "Select user role.",
+    type: "array",
+    items: {
+      type: "string",
+      enum: Object.values(Role),
+    },
+    example: [Role.CUSTOMER],
+    description: "Select user roles (multiple selections allowed).",
   })
-  readonly role: Role;
+  readonly roles: Role[];
 
   @IsOptional()
   @ApiPropertyOptional({
-    type: AddressDto,
+    type: "string",
+    format: "textarea",
     description: "User address.",
   })
-  address: AddressDto;
+  address: string;
 }

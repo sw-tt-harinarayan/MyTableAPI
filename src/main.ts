@@ -11,8 +11,8 @@ async function bootstrap() {
 
   const globalPrefix = "api/v1";
   app.setGlobalPrefix(globalPrefix);
-  app.useGlobalPipes(new ValidationPipe());
   app.use(express.static("uploads"));
+  app.useGlobalPipes(new ValidationPipe());
 
   app.useGlobalInterceptors(new ResponseTransformInterceptor());
 
