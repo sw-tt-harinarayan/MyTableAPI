@@ -44,8 +44,8 @@ export default class AuthGuard implements CanActivate {
 
       request.user = extractDataFromObject(user, [
         "id",
-        "role",
         "email",
+        "roles",
         "fullName",
       ]);
     } catch {

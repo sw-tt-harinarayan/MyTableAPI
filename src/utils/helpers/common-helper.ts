@@ -18,3 +18,19 @@ export function extractDataFromObject(data: any, keys: Array<any>) {
 
   return result;
 }
+
+export function arraysEqual(arr1: Array<string>, arr2: Array<string>) {
+  // Check if both arrays have the same length
+  if (arr1.length !== arr2.length) return false;
+
+  // Check if every element of arr1 exists in arr2
+  return arr1.every((elem) => arr2.includes(elem));
+}
+
+export function checkRoleExists(arr1: Array<string>, arr2: Array<string>) {
+  for (let i = 0; i < arr2.length; i++) {
+    if (arr1.includes(arr2[i])) return true;
+  }
+
+  return false;
+}

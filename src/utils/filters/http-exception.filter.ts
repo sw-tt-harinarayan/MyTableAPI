@@ -17,6 +17,12 @@ export default class HttpExceptionFilter implements ExceptionFilter {
 
     console.error({ request: request.body, errorResponse });
 
+    if (errorResponse.statusCode === 403)
+      errorResponse = {
+        ...errorResponse,
+        message: "You don't have permission!",
+      };
+
     if (Array.isArray(errorResponse.message))
       errorResponse = {
         ...errorResponse,

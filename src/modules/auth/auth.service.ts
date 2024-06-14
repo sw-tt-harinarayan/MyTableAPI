@@ -1,23 +1,6 @@
-// import { Injectable, UnauthorizedException } from "@nestjs/common";
-
-// import UserService from "../user/user.service";
-
-// @Injectable()
-// export default class AuthService {
-//   constructor(private usersService: UserService) {}
-
-//   async signIn(username: string, pass: string): Promise<any> {
-//     const user = await this.usersService.findByEmail(username);
-//     if (user?.password !== pass) throw new UnauthorizedException();
-
-//     const { password, ...result } = user;
-//     return result;
-//   }
-// }
-
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable, BadRequestException } from "@nestjs/common";
 
 import { LoginDto } from "./dto/auth.dto";
 import UserService from "../user/user.service";
@@ -34,7 +17,7 @@ export default class AuthService {
     const user: User = await this.usersService.findByEmail(email);
 
     if (!bcrypt.compareSync(password, user.password))
-      throw new UnauthorizedException();
+      throw new BadRequestException("Password not matched!");
 
     delete user.password;
     const payload = { email: user.email };

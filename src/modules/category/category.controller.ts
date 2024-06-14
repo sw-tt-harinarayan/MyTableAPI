@@ -13,7 +13,6 @@ import {
   Param,
   Query,
   Delete,
-  UseGuards,
   HttpStatus,
   Controller,
   UploadedFile,
@@ -22,18 +21,14 @@ import {
 
 import { CATEGORY } from "src/lang/en";
 import { Role } from "src/configs/enums";
-import AuthGuard from "../auth/auth.guard";
-import RolesGuard from "../auth/roles.guard";
 import CategoryService from "./category.service";
+import Roles from "src/utils/decorators/roles.decorator";
 import CreateCategoryDto from "./dto/create-category.dto";
 import UpdateCategoryDto from "./dto/update-category.dto";
-import { Roles } from "src/utils/decorators/roles.decorator";
 import PaginateCategoryDto from "./dto/paginate-category.dto";
 
 @ApiBearerAuth()
 @Roles(Role.ADMIN)
-// @UseGuards(RolesGuard)
-// @UseGuards(AuthGuard)
 @Controller("category")
 @ApiTags("Category CRUD")
 export default class CategoryController {
@@ -55,7 +50,7 @@ export default class CategoryController {
     return this.categoryService.create(createCategoryDto);
   }
 
-  @Get()
+  @Get("list")
   @ApiOperation({ summary: "Get category list" })
   @ApiResponse({
     status: HttpStatus.OK,
