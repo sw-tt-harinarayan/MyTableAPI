@@ -14,7 +14,7 @@ export class Category {
   @Prop()
   image: string;
 
-  @Prop()
+  @Prop({ default: true })
   isActive: boolean;
 }
 

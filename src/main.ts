@@ -17,8 +17,8 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseTransformInterceptor());
 
   const config = new DocumentBuilder()
-    .setTitle("NEST API")
-    .setDescription("NEST API for learning nestjs.")
+    .setTitle("MyTable API")
+    .setDescription("MyTable API for complete project.")
     .setVersion("1.0")
     .setBasePath(globalPrefix)
     .addServer(process.env.BASE_URL, "Local Server")

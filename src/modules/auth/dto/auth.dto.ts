@@ -35,7 +35,7 @@ export class LoginDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: "Test@123",
+    example: "Hari@123#",
     description: "The password of your account",
   })
   readonly password: string;

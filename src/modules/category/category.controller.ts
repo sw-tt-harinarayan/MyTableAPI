@@ -29,8 +29,8 @@ import PaginateCategoryDto from "./dto/paginate-category.dto";
 
 @ApiBearerAuth()
 @Roles(Role.ADMIN)
-@Controller("category")
 @ApiTags("Category CRUD")
+@Controller("category")
 export default class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 

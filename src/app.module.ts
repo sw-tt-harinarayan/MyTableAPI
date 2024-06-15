@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { APP_FILTER } from "@nestjs/core";
 import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
+import { OutletModule } from './modules/outlet/outlet.module';
 
 import AppService from "./app.service";
 import AppController from "./app.controller";
@@ -21,6 +22,7 @@ import HttpExceptionFilter from "./utils/filters/http-exception.filter";
     UserModule,
     AuthModule,
     CategoryModule,
+    OutletModule,
   ],
   controllers: [AppController],
   providers: [

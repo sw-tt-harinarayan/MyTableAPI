@@ -1,34 +1,17 @@
+import { IsOptional, IsEnum } from "class-validator";
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsOptional, IsNumberString, IsEnum } from "class-validator";
 
-import { SortByUser } from "src/configs/enums";
+import { sortByUser } from "src/configs/constants";
+import PaginateDto from "src/utils/dto/paginate.dto";
 
-export default class PaginateUserDto {
-  @IsNumberString()
+export default class PaginateUserDto extends PaginateDto {
+  @IsEnum(sortByUser)
   @IsOptional()
   @ApiPropertyOptional({
-    example: 1,
-    type: "number",
-    description: "Page number",
-  })
-  page: number;
-
-  @IsNumberString()
-  @IsOptional()
-  @ApiPropertyOptional({
-    example: 10,
-    type: "number",
-    description: "Per page data",
-  })
-  limit: number;
-
-  @IsEnum(SortByUser)
-  @IsOptional()
-  @ApiPropertyOptional({
-    enum: SortByUser,
+    enum: sortByUser,
     type: "string",
     description: "Sort by",
-    example: SortByUser.CREATED_DESC,
+    example: sortByUser.CREATED_DESC,
   })
-  sort: SortByUser;
+  sort: string;
 }
