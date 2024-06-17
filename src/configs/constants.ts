@@ -5,11 +5,15 @@ export const jwtConstants = {
 
 export const imageFolderField = {
   user: {
-    folderName: "users",
     fieldName: "profileImage",
+    folderName: "users",
   },
   category: {
     fieldName: "image",
     folderName: "categories",
+  },
+  foodItem: {
+    fieldName: "image",
+    folderName: "food_items",
   },
 };

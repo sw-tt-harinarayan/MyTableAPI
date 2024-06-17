@@ -24,3 +24,8 @@ export enum SortByCategory {
   CREATED_ASC = "createdAt,asc",
   CREATED_DESC = "createdAt,desc",
 }
+
+export enum SortByFoodItem {
+  CREATED_ASC = "createdAt,asc",
+  CREATED_DESC = "createdAt,desc",
+}

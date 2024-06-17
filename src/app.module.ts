@@ -8,6 +8,7 @@ import AppController from "./app.controller";
 import UserModule from "./modules/user/user.module";
 import AuthModule from "./modules/auth/auth.module";
 import CategoryModule from "./modules/category/category.module";
+import FoodItemModule from "./modules/food-item/food-item.module";
 import HttpExceptionFilter from "./utils/filters/http-exception.filter";
 
 @Module({
@@ -21,6 +22,7 @@ import HttpExceptionFilter from "./utils/filters/http-exception.filter";
     UserModule,
     AuthModule,
     CategoryModule,
+    FoodItemModule,
   ],
   controllers: [AppController],
   providers: [
