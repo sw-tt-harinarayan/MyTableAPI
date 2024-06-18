@@ -5,8 +5,8 @@ export const jwtConstants = {
 
 export const imageFolderField = {
   user: {
-    folderName: "users",
     fieldName: "profileImage",
+    folderName: "users",
   },
   category: {
     fieldName: "image",
@@ -15,6 +15,10 @@ export const imageFolderField = {
   outlet: {
     fieldName: "images",
     folderName: "Outlets",
+  },
+  foodItem: {
+    fieldName: "image",
+    folderName: "food_items",
   },
 };
 
@@ -34,6 +38,11 @@ export const sortByUser = {
 };
 
 export const sortByCategory = {
+  ...sortByDate,
+  ...sortByName,
+};
+
+export const sortByFoodItem = {
   ...sortByDate,
   ...sortByName,
 };
