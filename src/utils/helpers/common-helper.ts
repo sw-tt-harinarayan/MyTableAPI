@@ -4,7 +4,9 @@ export const getImageFolderField = (url: string): ImageFolderFieldInterface => {
   let key: string = "";
   const urlArr: Array<string> = url.split("/");
 
-  if (urlArr.length > 3) key = urlArr[3];
+  if (urlArr.length > 3) key = convertToCamelCase(urlArr[3]);
+
+  console.log({ key });
 
   return imageFolderField[key];
 };
@@ -33,4 +35,10 @@ export function checkRoleExists(arr1: Array<string>, arr2: Array<string>) {
   }
 
   return false;
+}
+
+export function convertToCamelCase(str: string) {
+  return str.replace(/-([a-z])/g, function (match: any, p1: string) {
+    return p1.toUpperCase();
+  });
 }

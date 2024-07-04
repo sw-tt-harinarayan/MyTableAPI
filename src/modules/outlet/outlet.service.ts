@@ -8,7 +8,7 @@ import {
 
 import { OUTLET } from "src/lang/en";
 import { Outlet } from "./schemas/outlet.schema";
-import OutletOutletDto from "./dto/create-outlet.dto";
+import CreateOutletDto from "./dto/create-outlet.dto";
 import UpdateOutletDto from "./dto/update-outlet.dto";
 
 @Injectable()
@@ -17,7 +17,7 @@ export default class OutletService {
     @InjectModel(Outlet.name) private outletModel: PaginateModel<Outlet>,
   ) {}
 
-  async create(createOutletDto: OutletOutletDto) {
+  async create(createOutletDto: CreateOutletDto) {
     try {
       const outlet: Outlet = await this.outletModel.create(createOutletDto);
 

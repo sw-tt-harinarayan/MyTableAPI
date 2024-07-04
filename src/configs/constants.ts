@@ -17,7 +17,7 @@ export const imageFolderField = {
     folderName: "Outlets",
   },
   foodItem: {
-    fieldName: "image",
+    fieldName: "images",
     folderName: "food_items",
   },
 };

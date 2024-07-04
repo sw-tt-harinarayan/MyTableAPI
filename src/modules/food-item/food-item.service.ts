@@ -1,27 +1,90 @@
-import { Injectable } from "@nestjs/common";
+import { PaginateModel } from "mongoose";
+import { InjectModel } from "@nestjs/mongoose";
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  InternalServerErrorException,
+} from "@nestjs/common";
 
+import { FOOD_ITEM } from "src/lang/en";
+import { FoodItem } from "./schemas/food-item.schema";
 import CreateFoodItemDto from "./dto/create-food-item.dto";
 import UpdateFoodItemDto from "./dto/update-food-item.dto";
 
 @Injectable()
 export default class FoodItemService {
-  create(createFoodItemDto: CreateFoodItemDto) {
-    return "This action adds a new foodItem";
+  constructor(
+    @InjectModel(FoodItem.name) private foodItemModel: PaginateModel<FoodItem>,
+  ) {}
+
+  async create(createFoodItemDto: CreateFoodItemDto) {
+    let foodItem: FoodItem = await this.foodItemModel.findOne({
+      name: createFoodItemDto.name,
+    });
+
+    if (foodItem) throw new BadRequestException("Food Item already exist");
+
+    try {
+      const foodItem: FoodItem =
+        await this.foodItemModel.create(createFoodItemDto);
+
+      return { body: foodItem, message: FOOD_ITEM.created };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
   }
 
-  findAll() {
-    return `This action returns all foodItem`;
+  async findAll() {
+    const foodItems = await this.foodItemModel.paginate(
+      {},
+      {
+        populate: "Category",
+      },
+    );
+
+    return { body: foodItems, message: FOOD_ITEM.found };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} foodItem`;
+  async findOne(id: string) {
+    const foodItem = await this.foodItemModel.findById(id);
+
+    if (!foodItem) throw new NotFoundException(FOOD_ITEM.notFound);
+
+    return { body: foodItem, message: FOOD_ITEM.found };
   }
 
-  update(id: number, updateFoodItemDto: UpdateFoodItemDto) {
-    return `This action updates a #${id} foodItem`;
+  async update(id: string, updateFoodItemDto: UpdateFoodItemDto) {
+    let foodItem: FoodItem;
+
+    try {
+      foodItem = await this.foodItemModel.findByIdAndUpdate(
+        id,
+        updateFoodItemDto,
+        {
+          new: true,
+        },
+      );
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+
+    if (!foodItem) throw new NotFoundException(FOOD_ITEM.notFound);
+
+    return { body: foodItem, message: FOOD_ITEM.updated };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} foodItem`;
+  async remove(id: string) {
+    let foodItem: FoodItem;
+
+    try {
+      foodItem = await this.foodItemModel.findByIdAndDelete(id);
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+
+    if (!foodItem) throw new NotFoundException(FOOD_ITEM.notFound);
+
+    return { body: foodItem, message: FOOD_ITEM.deleted };
   }
 }

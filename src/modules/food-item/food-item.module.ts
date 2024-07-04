@@ -8,7 +8,7 @@ import UserModule from "../user/user.module";
 import FoodItemService from "./food-item.service";
 import FoodItemSchema from "./schemas/food-item.schema";
 import FoodItemController from "./food-item.controller";
-import ImageUploadMiddleware from "src/utils/middlewares/image-upload.middleware";
+import MultiImageUploadMiddleware from "src/utils/middlewares/multi-image-upload.middleware";
 
 @Module({
   imports: [
@@ -26,13 +26,13 @@ import ImageUploadMiddleware from "src/utils/middlewares/image-upload.middleware
       useClass: RolesGuard,
     },
     FoodItemService,
-    ImageUploadMiddleware,
+    MultiImageUploadMiddleware,
   ],
 })
 export default class FoodItemModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(ImageUploadMiddleware)
+      .apply(MultiImageUploadMiddleware)
       .forRoutes(
         { path: "food-item/create", method: RequestMethod.POST },
         { path: "food-item/edit/:id", method: RequestMethod.PATCH },

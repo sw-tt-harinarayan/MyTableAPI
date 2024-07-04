@@ -8,7 +8,7 @@ import { Category } from "src/modules/category/schemas/category.schema";
 @Schema({ timestamps: true, versionKey: false })
 export class FoodItem {
   @Prop({ type: mongoose.Types.ObjectId, ref: "Category", required: true })
-  category: Category | string; // Type can be either Category or just string if you don't define a separate interface for Category
+  category: Category;
 
   @Prop()
   name: string;
@@ -23,9 +23,6 @@ export class FoodItem {
   price: number;
 
   @Prop()
-  isAvailable: boolean;
-
-  @Prop()
   isActive: boolean;
 }
 
@@ -37,6 +34,12 @@ FoodItemSchema.set("toJSON", {
     delete ret._id;
 
     ret.id = doc._id;
+
+    if (ret?.images.length > 0) {
+      ret.images = ret.images.map((image: string) => {
+        return `${process.env.BASE_URL}/${imageFolderField.foodItem.folderName}/${image}`;
+      });
+    }
 
     return ret;
   },

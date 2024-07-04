@@ -25,6 +25,7 @@ export default class MultiImageUploadMiddleware implements NestMiddleware {
 
     upload(req, res, (err: any) => {
       if (err) {
+        console.error(err);
         return res.status(400).json({
           statusCode: 400,
           message: err.message,
