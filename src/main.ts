@@ -16,6 +16,8 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new ResponseTransformInterceptor());
 
+  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcmlAdGVzdC5jb20iLCJpYXQiOjE3MjAyOTMwMzIsImV4cCI6MTcyNTQ3NzAzMn0._RdM0KZ1yXzo__SZvn8LtaJjLWZG6r4bgMh4UPO1v1M",
+
   const config = new DocumentBuilder()
     .setTitle("MyTable API")
     .setDescription("MyTable API for complete project.")

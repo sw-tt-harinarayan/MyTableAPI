@@ -6,14 +6,26 @@ import AuthGuard from "../auth/auth.guard";
 import RolesGuard from "../auth/roles.guard";
 import UserModule from "../user/user.module";
 import FoodItemService from "./food-item.service";
-import FoodItemSchema from "./schemas/food-item.schema";
 import FoodItemController from "./food-item.controller";
+import FoodItemSchema, { FoodItem } from "./schemas/food-item.schema";
 import MultiImageUploadMiddleware from "src/utils/middlewares/multi-image-upload.middleware";
 
 @Module({
   imports: [
     UserModule,
-    MongooseModule.forFeature([{ name: "FoodItem", schema: FoodItemSchema }]),
+    MongooseModule.forFeature([
+      { name: FoodItem.name, schema: FoodItemSchema },
+    ]),
+    // MongooseModule.forFeatureAsync([
+    //   {
+    //     name: FoodItem.name,
+    //     useFactory: () => {
+    //       const schema = FoodItemSchema;
+    //       schema.plugin(require("mongoose-autopopulate"));
+    //       return schema;
+    //     },
+    //   },
+    // ]),
   ],
   controllers: [FoodItemController],
   providers: [

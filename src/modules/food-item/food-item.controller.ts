@@ -6,24 +6,25 @@ import {
   Param,
   Delete,
   Controller,
-  UploadedFiles,
   HttpStatus,
+  UploadedFiles,
+  UseInterceptors,
 } from "@nestjs/common";
 import {
-  ApiBearerAuth,
+  ApiTags,
+  ApiResponse,
   ApiConsumes,
   ApiOperation,
-  ApiResponse,
-  ApiTags,
+  ApiBearerAuth,
 } from "@nestjs/swagger";
 
+import { FOOD_ITEM } from "src/lang/en";
 import { Role } from "src/configs/enums";
 import FoodItemService from "./food-item.service";
 import Roles from "src/utils/decorators/roles.decorator";
 import UpdateFoodItemDto from "./dto/update-food-item.dto";
 import CreateFoodItemDto from "./dto/create-food-item.dto";
-import { FOOD_ITEM } from "src/lang/en";
-import { FoodItem } from "./schemas/food-item.schema";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @ApiBearerAuth()
 @Roles(Role.ADMIN)
@@ -39,7 +40,8 @@ export default class FoodItemController {
     status: HttpStatus.CREATED,
     description: FOOD_ITEM.created,
   })
-  create(
+  @UseInterceptors(FileInterceptor("file"))
+  async create(
     @Body() createFoodItemDto: CreateFoodItemDto,
     @UploadedFiles() files: [],
   ) {

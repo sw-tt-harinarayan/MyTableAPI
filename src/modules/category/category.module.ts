@@ -30,12 +30,12 @@ import ImageUploadMiddleware from "src/utils/middlewares/image-upload.middleware
   ],
 })
 export default class CategoryModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(ImageUploadMiddleware)
-      .forRoutes(
-        { path: "category/create", method: RequestMethod.POST },
-        { path: "category/edit/:id", method: RequestMethod.PATCH },
-      );
-  }
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer
+  //     .apply(ImageUploadMiddleware)
+  //     .forRoutes(
+  //       { path: "category/create", method: RequestMethod.POST },
+  //       { path: "category/edit/:id", method: RequestMethod.PATCH },
+  //     );
+  // }
 }

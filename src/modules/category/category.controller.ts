@@ -1,3 +1,4 @@
+import { FileInterceptor } from "@nestjs/platform-express";
 import {
   ApiTags,
   ApiResponse,
@@ -16,6 +17,7 @@ import {
   HttpStatus,
   Controller,
   UploadedFile,
+  UseInterceptors,
   InternalServerErrorException,
 } from "@nestjs/common";
 
@@ -26,6 +28,7 @@ import Roles from "src/utils/decorators/roles.decorator";
 import CreateCategoryDto from "./dto/create-category.dto";
 import UpdateCategoryDto from "./dto/update-category.dto";
 import PaginateCategoryDto from "./dto/paginate-category.dto";
+import uploadFileCloudinary from "src/utils/helpers/cloudinary-file-upload";
 
 @ApiBearerAuth()
 @Roles(Role.ADMIN)
@@ -41,11 +44,17 @@ export default class CategoryController {
     status: HttpStatus.CREATED,
     description: CATEGORY.created,
   })
-  create(
-    @Body() createCategoryDto: CreateCategoryDto,
+  @UseInterceptors(FileInterceptor("image"))
+  async create(
     @UploadedFile() image: Express.Multer.File,
+    @Body() createCategoryDto: CreateCategoryDto,
   ) {
+    console.log({ createCategoryDto });
+
+    const uploadResponse = await uploadFileCloudinary(image.path);
+
     if (image) createCategoryDto.image = image.filename;
+    console.log({ uploadResponse, image });
 
     return this.categoryService.create(createCategoryDto);
   }

@@ -39,7 +39,13 @@ export default class FoodItemService {
     const foodItems = await this.foodItemModel.paginate(
       {},
       {
-        populate: "Category",
+        strictPopulate: false,
+        populate: [
+          {
+            path: "category",
+            select: "name",
+          },
+        ],
       },
     );
 

@@ -6,8 +6,6 @@ export const getImageFolderField = (url: string): ImageFolderFieldInterface => {
 
   if (urlArr.length > 3) key = convertToCamelCase(urlArr[3]);
 
-  console.log({ key });
-
   return imageFolderField[key];
 };
 

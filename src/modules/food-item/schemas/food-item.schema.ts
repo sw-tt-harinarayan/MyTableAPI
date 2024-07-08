@@ -7,7 +7,11 @@ import { Category } from "src/modules/category/schemas/category.schema";
 
 @Schema({ timestamps: true, versionKey: false })
 export class FoodItem {
-  @Prop({ type: mongoose.Types.ObjectId, ref: "Category", required: true })
+  @Prop({
+    ref: "Category",
+    autopopulate: true,
+    type: mongoose.Schema.Types.ObjectId,
+  })
   category: Category;
 
   @Prop()

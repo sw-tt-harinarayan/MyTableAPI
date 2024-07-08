@@ -19,7 +19,12 @@ import HttpExceptionFilter from "./utils/filters/http-exception.filter";
       envFilePath: ".env",
       expandVariables: true,
     }),
-    MongooseModule.forRoot(process.env.DB_URI),
+    MongooseModule.forRoot(process.env.DB_URI, {
+      connectionFactory: (connection) => {
+        connection.plugin(require("mongoose-autopopulate"));
+        return connection;
+      },
+    }),
     UserModule,
     AuthModule,
     OutletModule,
