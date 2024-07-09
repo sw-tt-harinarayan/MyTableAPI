@@ -9,6 +9,7 @@ import CategoryService from "./category.service";
 import CategorySchema from "./schemas/category.schema";
 import CategoryController from "./category.controller";
 import ImageUploadMiddleware from "src/utils/middlewares/image-upload.middleware";
+import CloudinaryService from "src/cloudinary.service";
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import ImageUploadMiddleware from "src/utils/middlewares/image-upload.middleware
       useClass: RolesGuard,
     },
     CategoryService,
-    ImageUploadMiddleware,
+    CloudinaryService,
+    // ImageUploadMiddleware,
   ],
 })
 export default class CategoryModule {

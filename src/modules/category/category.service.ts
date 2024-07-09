@@ -29,9 +29,9 @@ export default class CategoryService {
   }
 
   async findAll(options: any) {
-    const categorys = await this.categoryModel.paginate({}, options);
+    const categories = await this.categoryModel.paginate({}, options);
 
-    return { body: categorys, message: CATEGORY.found };
+    return { body: categories, message: CATEGORY.found };
   }
 
   async findOne(id: string) {

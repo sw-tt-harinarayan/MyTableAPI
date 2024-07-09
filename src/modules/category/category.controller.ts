@@ -18,24 +18,29 @@ import {
   Controller,
   UploadedFile,
   UseInterceptors,
+  BadRequestException,
   InternalServerErrorException,
 } from "@nestjs/common";
 
 import { CATEGORY } from "src/lang/en";
 import { Role } from "src/configs/enums";
 import CategoryService from "./category.service";
+import CloudinaryService from "src/cloudinary.service";
 import Roles from "src/utils/decorators/roles.decorator";
+import { imageFolderField } from "src/configs/constants";
 import CreateCategoryDto from "./dto/create-category.dto";
 import UpdateCategoryDto from "./dto/update-category.dto";
 import PaginateCategoryDto from "./dto/paginate-category.dto";
-import uploadFileCloudinary from "src/utils/helpers/cloudinary-file-upload";
 
 @ApiBearerAuth()
 @Roles(Role.ADMIN)
 @ApiTags("Category CRUD")
 @Controller("category")
 export default class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
 
   @Post("create")
   @ApiConsumes("multipart/form-data")
@@ -46,15 +51,19 @@ export default class CategoryController {
   })
   @UseInterceptors(FileInterceptor("image"))
   async create(
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFile() file: Express.Multer.File,
     @Body() createCategoryDto: CreateCategoryDto,
   ) {
-    console.log({ createCategoryDto });
+    try {
+      const url: string = await this.cloudinaryService.uploadImage(
+        file,
+        imageFolderField.category.folderName,
+      );
 
-    const uploadResponse = await uploadFileCloudinary(image.path);
-
-    if (image) createCategoryDto.image = image.filename;
-    console.log({ uploadResponse, image });
+      createCategoryDto.image = url;
+    } catch (error: any) {
+      throw new BadRequestException(error.message);
+    }
 
     return this.categoryService.create(createCategoryDto);
   }

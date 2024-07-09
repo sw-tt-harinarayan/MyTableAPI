@@ -27,8 +27,8 @@ CategorySchema.set("toJSON", {
 
     ret.id = doc._id;
 
-    if (ret?.image)
-      ret.image = `${process.env.BASE_URL}/${imageFolderField.category.folderName}/${ret.image}`;
+    // if (ret?.image)
+    //   ret.image = `${process.env.BASE_URL}/${imageFolderField.category.folderName}/${ret.image}`;
 
     return ret;
   },

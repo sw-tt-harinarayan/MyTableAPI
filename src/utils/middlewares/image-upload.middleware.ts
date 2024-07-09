@@ -14,7 +14,6 @@ import { multerOptions, dynamicStorage } from "src/configs/multer.config";
 export default class ImageUploadMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const { folderName, fieldName } = getImageFolderField(req.originalUrl);
-    console.log(req.files, "FFFFFFFFFFFFFFFFFFF");
 
     if (!fieldName || !folderName)
       throw new InternalServerErrorException(COMMON.internalError);
