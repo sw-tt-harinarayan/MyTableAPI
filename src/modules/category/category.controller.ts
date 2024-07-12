@@ -17,8 +17,11 @@ import {
   HttpStatus,
   Controller,
   UploadedFile,
+  ParseFilePipe,
   UseInterceptors,
+  FileTypeValidator,
   BadRequestException,
+  MaxFileSizeValidator,
   InternalServerErrorException,
 } from "@nestjs/common";
 
@@ -51,7 +54,15 @@ export default class CategoryController {
   })
   @UseInterceptors(FileInterceptor("image"))
   async create(
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new FileTypeValidator({ fileType: "image/jpeg" }),
+          new MaxFileSizeValidator({ maxSize: 500 * 1000 }), // SIZE in bytes
+        ],
+      }),
+    )
+    file: Express.Multer.File,
     @Body() createCategoryDto: CreateCategoryDto,
   ) {
     try {

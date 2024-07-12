@@ -16,6 +16,8 @@ export default class CloudinaryService {
   }
 
   async uploadImage(file: any, folder: string): Promise<string> {
+    console.log("FFFFFFFFFFFFFFF", file);
+
     return new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
